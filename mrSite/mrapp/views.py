@@ -19,7 +19,14 @@ def index(request):
 
 
 def recipes(request, recipes_name):
-    recipes_data = requests.get("http://127.0.0.1:7979/recipes_steps?recipesName=%s" % recipes_name).json()
-    print(recipes_data)
-    data = {"data": recipes_data}
-    return render(request, 'recipes.html', data)
+    steps_data = requests.get("http://127.0.0.1:7979/recipes_steps?recipesName=%s" % recipes_name).json()
+    ming_data = requests.get("http://127.0.0.1:7979/recipes_ming?recipesName=%s" % recipes_name).json()
+    stepsData = []
+    mingData = []
+    #for m in ming_data:
+        #stepsData.append([steps_data[m]['step'], steps_data[m]['s_desc']])
+
+    for s in steps_data:
+        stepsData.append([steps_data[s]['step'], steps_data[s]['s_desc']])
+
+    return render(request, 'recipes.html', {"stepsData": stepsData, "mingData": ming_data})

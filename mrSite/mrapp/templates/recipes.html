@@ -9,7 +9,22 @@
     <p>
         This is a simple demo client for Manny's recipes
     </p>
-    <h2> Recipes Data</h2>
+    <h2> Main Ingredients </h2>
+        <ol>
+        {% for ming in mingData%}
+            <li>
+            {{ming.1}} {{ming.2}} gram
+            </li>
+        {% endfor %}
+        </ol>
+    <h2> Steps </h2>
+        <ol>
+        {% for steps in stepsData%}
+            <li>
+                {{steps.1}}
+            </li>
+        {% endfor %}
+    </ol>
 
 </body>
 </html>
