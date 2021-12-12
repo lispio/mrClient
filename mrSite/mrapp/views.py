@@ -9,12 +9,17 @@ from json2html import *
 
 
 def index(request):
+
     recipes = requests.get("http://127.0.0.1:7979/recipes").json()
-    conntext = {}
     tmpList = []
     for r in recipes:
-        conntext.update({recipes[r]['name']: recipes[r]['recipes_type']})
         tmpList.append([recipes[r]['name'], recipes[r]['recipes_type'], recipes[r]['username']])
-    return render(request, 'recipes.html', {"tmpList": tmpList})
-    #return render(request, 'recipes.html', {"recipes": conntext})
 
+    return render(request, 'welcome.html', {"message": tmpList})
+
+
+def recipes(request, recipes_name):
+    recipes_data = requests.get("http://127.0.0.1:7979/recipes_steps?recipesName=%s" % recipes_name).json()
+    print(recipes_data)
+    data = {"data": recipes_data}
+    return render(request, 'recipes.html', data)

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MrClient</title>
+</head>
+<body>
+    <h1> Welcome to Manny's recipes </h1>
+    <p>
+        This is a simple demo client for Manny's recipes
+    </p>
+    <h2> Recipes </h2>
+    <ul>
+        {% for recipes in message%}
+        <li>
+            <a href="/recipes/{{recipes.0}}">
+                {{recipes.0}}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
