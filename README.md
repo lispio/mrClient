@@ -14,7 +14,7 @@
 
 
 ## General Information
-
+Simple demo client ;)
 <!-- You don't have to answer all the questions - just the ones relevant to your project. -->
 
 
