@@ -10,7 +10,7 @@
         This is a simple demo client for Manny's recipes
     </p>
     <h2> Recipes </h2>
-    <ul>
+    <ol>
         {% for recipes in message%}
         <li>
             <a href="/recipes/{{recipes.0}}">
@@ -18,7 +18,7 @@
             </a>
         </li>
         {% endfor %}
-    </ul>
+    </ol>
 
 </body>
 </html>
