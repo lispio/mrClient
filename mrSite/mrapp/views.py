@@ -7,10 +7,12 @@ import requests
 from django.http import HttpResponse
 from json2html import *
 
+from .templates.mrQueryTemplate.getTemplate import mrGetQuery
+
 
 def index(request):
 
-    recipes = requests.get("http://127.0.0.1:7979/recipes").json()
+    recipes = requests.get(mrGetQuery.recipes.value).json()
     tmpList = []
     for r in recipes:
         tmpList.append([recipes[r]['name'], recipes[r]['recipes_type'], recipes[r]['username']])
@@ -19,8 +21,8 @@ def index(request):
 
 
 def recipes(request, recipes_name):
-    steps_data = requests.get("http://127.0.0.1:7979/recipes_steps?recipesName=%s" % recipes_name).json()
-    ming_data = requests.get("http://127.0.0.1:7979/recipes_ming?recipesName=%s" % recipes_name).json()
+    steps_data = requests.get(mrGetQuery.recipesSteps.value % recipes_name).json()
+    ming_data = requests.get(mrGetQuery.recipesMing.value % recipes_name).json()
     stepsData = []
 
     for s in steps_data:
