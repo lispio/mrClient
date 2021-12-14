@@ -1,6 +1,6 @@
 import requests
 
-from .templates.mrQueryTemplate.getTemplate import mrGetQuery
+from .templates.mrQueryTemplate.getTemplate import mrGetQuery, mrPostQuery
 
 
 def get_recipes():
@@ -26,3 +26,9 @@ def get_recipes_my(username):
         return {"message": tmpMyRecipes}
     else:
         return {"message": ""}
+
+
+def addUserToMr(username):
+    print(username)
+    requests.post(mrPostQuery.addUser.value, data='{"name": "%s"}' % username)
+    return {"message": "added"}

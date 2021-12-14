@@ -3,9 +3,9 @@ from django.shortcuts import render, redirect
 # Create your views here.
 import requests
 from .forms import UserForm
-from .templates.mrQueryTemplate.getTemplate import mrGetQuery
+from .templates.mrQueryTemplate.getTemplate import mrGetQuery, mrPostQuery
 
-from .common import get_recipes, get_recipes_my
+from .common import get_recipes, get_recipes_my, addUserToMr
 
 
 def index(request):
@@ -32,7 +32,6 @@ def recipes(request, recipes_name):
 
 
 def userLogged(request):
-    print(request.user)
     return render(request, 'userLogged.html', get_recipes_my(request.user))
 
 
@@ -41,6 +40,7 @@ def signup(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
+            addUserToMr(form.cleaned_data.get("username"))
             return redirect('login')
     else:
         form = UserForm()
