@@ -6,10 +6,6 @@
 </head>
 <body>
     {% csrf_token %}
-    <a href="/signup">SingUp </a>
-
-    <p><a href="/login">login </a></p>
-
     <h1> Welcome to Manny's recipes </h1>
         {% if user.is_authenticated %}
            Hi: {{user.username}}
