@@ -1,0 +1,42 @@
+{% extends 'baseLogged.html'%}
+{% block content%}
+
+    <form method="post" action="#">
+        {% csrf_token %}
+        Recipes Description
+        {{recipesDesc.as_p}}
+
+        <p><input type="Submit" name="saveDes" value="saveDes"/></p>
+
+    </form>
+
+
+    <form method="post" action="#">
+        {% csrf_token %}
+        {{mingForm.as_p}}
+
+
+        <p><input type="Submit" name="addIng" value="addIng"/>
+            <input type="Submit" name="saveIng" value="saveIng"/></p>
+
+
+
+    </form>
+
+    <form method="post" action="#">
+            {% csrf_token %}
+            Steps
+            {% for step in stepsList %}
+                <li>
+               Step: {{step}}
+                </li>
+            {% endfor %}
+
+            {{form}}
+
+        <p><input type="Submit" name="addStep" value="addStep"/>
+            <input type="Submit" name="save" value="save"/></p>
+
+    </form>
+
+{% endblock %}

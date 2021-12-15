@@ -29,6 +29,5 @@ def get_recipes_my(username):
 
 
 def addUserToMr(username):
-    print(username)
     requests.post(mrPostQuery.addUser.value, data='{"name": "%s"}' % username)
     return {"message": "added"}

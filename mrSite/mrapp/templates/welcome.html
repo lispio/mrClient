@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>MrClient</title>
-</head>
-<body>
-    {% csrf_token %}
-    <a href="/signup">SingUp </a>
+{% extends 'base.html'%}
 
-    <p><a href="/login">login </a></p>
-
+{% block content%}
     <h1> Welcome to Manny's recipes </h1>
         {% if user.is_authenticated %}
-           Hi: {{user.username}}
-            <p><a href="/logout">logout </a></p>
+            Hi: {{user.username}}
         {% endif %}
     <p>
         This is a simple demo client for Manny's recipes
@@ -29,5 +19,4 @@
         {% endfor %}
     </ol>
 
-</body>
-</html>
+{% endblock %}
