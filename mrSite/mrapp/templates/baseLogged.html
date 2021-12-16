@@ -41,6 +41,10 @@
 
 <body>
     <div class="sidenav">
+        {% if user.is_authenticated %}
+        <h2><p style="color:gray">Hi: {{user.username}}</p></h2>
+        {% endif %}
+
         <a href="/userLogged">Home</a>
         <a href="/logout">logout </a>
         <a href="/myRecipes">My Recipes </a>

@@ -1,11 +1,8 @@
 {% extends 'baseLogged.html'%}
 {% block content%}
     {% csrf_token %}
-        {% if user.is_authenticated %}
-        <h2>Hi: {{user.username}}</h2>
-        {% endif %}
 
-   <p><h2> Recipes Public </h2></p>
+   <p><h2> Public Recipes: </h2></p>
     <ol>
         {% for recipes in message%}
         <li>
