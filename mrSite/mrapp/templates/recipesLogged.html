@@ -1,0 +1,22 @@
+{% extends 'baseLogged.html'%}
+{% block content%}
+    <h1> Manny's recipes: {{mingData.0.0}}</h1>
+
+    <h2> Main Ingredients </h2>
+        <ol>
+        {% for ming in mingData %}
+            <li>
+            {{ming.1}} {{ming.2}} gram
+            </li>
+        {% endfor %}
+        </ol>
+    <h2> Steps </h2>
+        <ol>
+        {% for steps in stepsData%}
+            <li>
+                {{steps.1}}
+            </li>
+        {% endfor %}
+    </ol>
+
+{% endblock %}

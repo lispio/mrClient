@@ -13,13 +13,17 @@
 
     <form method="post" action="#">
         {% csrf_token %}
-        {{mingForm.as_p}}
 
+        {% for ming in MingList %}
+            <li>
+                {{ming.0}}  {{ming.1}} gram
+            </li>
+        {% endfor %}
+
+        {{mingForm.as_p}}
 
         <p><input type="Submit" name="addIng" value="addIng"/>
             <input type="Submit" name="saveIng" value="saveIng"/></p>
-
-
 
     </form>
 

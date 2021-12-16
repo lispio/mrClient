@@ -8,14 +8,18 @@ from .templates.mrQueryTemplate.getTemplate import mrGetQuery, mrPostQuery
 from .common import get_recipes, get_recipes_my, addUserToMr
 
 
-def index(request):
+def getPublicRecipes():
     recipes = requests.get(mrGetQuery.recipes.value).json()
     tmpList = []
     if recipes:
         for r in recipes:
             tmpList.append([recipes[r]['name'], recipes[r]['recipes_type'], recipes[r]['username']])
+    return {"message": tmpList}
 
-        return render(request, 'welcome.html', {"message": tmpList})
+
+def index(request):
+    if getPublicRecipes:
+        return render(request, 'welcome.html', getPublicRecipes())
     else:
         return render(request, 'welcome.html', {"message": ""})
 
@@ -28,11 +32,18 @@ def recipes(request, recipes_name):
     for s in steps_data:
         stepsData.append([steps_data[s]['step'], steps_data[s]['s_desc']])
 
-    return render(request, 'recipes.html', {"stepsData": stepsData, "mingData": ming_data})
+    if str(request.user) == 'AnonymousUser':
+        return render(request, 'recipes.html', {"stepsData": stepsData, "mingData": ming_data})
+    else:
+        return render(request, 'recipesLogged.html', {"stepsData": stepsData, "mingData": ming_data})
 
 
 def userLogged(request):
-    return render(request, 'userLogged.html', get_recipes_my(request.user))
+    return render(request, 'userLogged.html', getPublicRecipes())
+
+
+def myRecipes(request):
+    return render(request, 'myRecipes.html', get_recipes_my(request.user))
 
 
 def signup(request):
@@ -89,7 +100,7 @@ def addRecipes(request):
 
         if mingForm.is_valid():
             if request.POST.get("addIng"):
-                MingList.append([mingForm.cleaned_data["Ming"], mingForm.cleaned_data["weight"]])
+                MingList.append([mingForm.cleaned_data["ingredients"], mingForm.cleaned_data["weight"]])
                 #newStep(form.cleaned_data["steps"])
             if request.POST.get("saveIng"):
                 newMing(MingList)
@@ -105,4 +116,4 @@ def addRecipes(request):
         mingForm = addRecipesMing()
         recipesDesc = RecipesDesc()
 
-    return render(request, 'addRecipes.html', {"form": form, "stepsList": stepsList, "mingForm": mingForm, "recipesDesc": recipesDesc })
+    return render(request, 'addRecipes.html', {"form": form, "stepsList": stepsList, "mingForm": mingForm, "MingList": MingList, "recipesDesc": recipesDesc })

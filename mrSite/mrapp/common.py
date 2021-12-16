@@ -17,15 +17,13 @@ def get_recipes():
 
 def get_recipes_my(username):
     myRecipes = requests.get(mrGetQuery.recipesMy.value % username).json()
-
     if myRecipes:
         tmpMyRecipes = []
         for myR in myRecipes:
             tmpMyRecipes.append([myRecipes[myR]['name'], myRecipes[myR]['recipes_type'], myRecipes[myR]['username']])
-
-        return {"message": tmpMyRecipes}
+        return {"myRecipes": tmpMyRecipes}
     else:
-        return {"message": ""}
+        return {"myRecipes": ""}
 
 
 def addUserToMr(username):
