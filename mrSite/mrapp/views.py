@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -59,61 +61,125 @@ def signup(request):
 
 
 stepsList = []
-MingList = []
+mingList = []
+desc = []
+recipesInfo = []
+tmpMing = []
 
 
 def newMing(MList):
-    tmpMing = []
     for mgs in MList:
         tmpMing.append({"ming_id": mgs[0], "weight": mgs[1]})
 
-    MingList.clear()
     return tmpMing
+
+
+def getRecipesType(rtype):
+    rt = None
+    if rtype in ['1', 'bread', 'chleb']:
+        rt = 1
+    elif rtype in ['2', 'cheese', 'ser']:
+        rt = 2
+    elif rtype in ['3', 'wine', 'wino']:
+        rt = 3
+    elif rtype in ['4', 'liquor', 'nalewka']:
+        rt = 4
+
+    return rt
+
+
+def recipesIsPublic(info):
+    if info is None:
+        IsPublic = False
+    else:
+        IsPublic = True
+    return IsPublic
+
+
+def addDesc(Info, userid):
+    recInfo = {"name": Info[0][0],
+               "user_id": userid,
+               "recipes_type": getRecipesType(Info[0][1]),
+               "is_public": recipesIsPublic(Info[0][3]),
+               "des": Info[0][2], }
+    return recInfo
 
 
 def prepareStepsJson(stepList):
     tmpSteps = []
-    tmpSn = [sn for sn in range(1, len(stepList)+1)]
+    tmpSn = [sn for sn in range(1, len(stepList) + 1)]
     for s, n in zip(stepList, tmpSn):
         tmp = {"s_num": n, "s_desc": s}
         tmpSteps.append(tmp)
     stepList.clear()
-
     return tmpSteps
 
 
+geI = None
+geM = None
+geS = None
+
+
+def prepareAddRecipesJson(jI, jM, jS):
+    if jI:
+        global geI
+        geI = jI
+    if jM:
+        global geM
+        geM = jM
+    if jS:
+        global geS
+        geS = jS
+
+    if geI and geM and geS:
+        recpiesJson = geI
+        recpiesJson["steps"] = geS
+        recpiesJson["ming"] = geM
+        return recpiesJson
+
+
 def addRecipes(request):
+    jsonInfo = None
+    jsonSteps = None
+    jsonMing = None
+
     if request.method == "POST":
         form = addRecipesForm(request.POST)
         mingForm = addRecipesMing(request.POST)
         recipesDesc = RecipesDesc()
-        print(request.POST)
 
-        if recipesDesc.is_valid():
-            pass
+        if request.POST.get('saveDes'):
+            recipesInfo.append([request.POST.get('recipesName'),
+                                request.POST.get('recipesType'),
+                                request.POST.get('recipesDesc'),
+                                request.POST.get('is_public')])
+
+            jsonInfo = addDesc(recipesInfo, request.user.id)
 
         if form.is_valid():
             if request.POST.get("addStep"):
                 stepsList.append(form.cleaned_data["steps"])
             if request.POST.get("save"):
-                prepareStepsJson(stepsList)
+                jsonSteps = prepareStepsJson(stepsList)
 
         if mingForm.is_valid():
             if request.POST.get("addIng"):
-                MingList.append([mingForm.cleaned_data["ingredients"], mingForm.cleaned_data["weight"]])
-                #newStep(form.cleaned_data["steps"])
+                if mingForm.cleaned_data['ingredients'] == 'woda':
+                    mingList.append([2, mingForm.cleaned_data["weight"]])
+                if mingForm.cleaned_data['ingredients'] == 'maka':
+                    mingList.append([1, mingForm.cleaned_data["weight"]])
             if request.POST.get("saveIng"):
-                newMing(MingList)
-                #prepareStepsJson(stepsList)
-        #if form.is_valid():
-            #if request.POST.get("save"):
-                #print(request.POST.get())
-        #newStesps(form.cleaned_data["steps"])
-        #print(form.cleaned_data["steps"])
+                jsonMing = newMing(mingList)
 
     else:
         form = addRecipesForm()
         mingForm = addRecipesMing()
         recipesDesc = RecipesDesc()
 
-    return render(request, 'addRecipes.html', {"form": form, "stepsList": stepsList, "mingForm": mingForm, "MingList": MingList, "recipesDesc": recipesDesc })
+    rec = prepareAddRecipesJson(jsonInfo, jsonMing, jsonSteps)
+    if rec:
+        response = requests.post(mrPostQuery.addRecipes.value, data=json.dumps(rec))
+
+    return render(request, 'addRecipes.html',
+                  {"form": form, "stepsList": stepsList, "mingForm": mingForm, "MingList": mingList,
+                   "recipesDesc": recipesDesc})

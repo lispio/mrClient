@@ -2,11 +2,19 @@
 {% block content%}
 
     <form method="post" action="#">
+        currently available are those types of recipes:
+        <p>
+        <p>1 bread/chleb</p>
+        <p>2 cheese/ser</p>
+        <p>3 wine/wino</p>
+        <p>4 liquor/nalewka</p>
+        </p>
         {% csrf_token %}
         Recipes Description
+
         {{recipesDesc.as_p}}
 
-        <p><input type="Submit" name="saveDes" value="saveDes"/></p>
+        <p><input type="Submit" name="saveDes" value="save Description"/></p>
 
     </form>
 
@@ -22,24 +30,24 @@
 
         {{mingForm.as_p}}
 
-        <p><input type="Submit" name="addIng" value="addIng"/>
-            <input type="Submit" name="saveIng" value="saveIng"/></p>
+        <p><input type="Submit" name="addIng" value="add Ingredients"/>
+            <input type="Submit" name="saveIng" value="save Ingredients"/></p>
 
     </form>
 
     <form method="post" action="#">
             {% csrf_token %}
-            Steps
+            <p>Steps</p>
             {% for step in stepsList %}
                 <li>
-               Step: {{step}}
+                    {{step}}
                 </li>
             {% endfor %}
 
             {{form}}
 
-        <p><input type="Submit" name="addStep" value="addStep"/>
-            <input type="Submit" name="save" value="save"/></p>
+        <p><input type="Submit" name="addStep" value="add Step"/>
+            <input type="Submit" name="save" value="save Steps"/></p>
 
     </form>
 

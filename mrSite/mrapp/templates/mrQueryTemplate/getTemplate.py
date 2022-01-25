@@ -10,4 +10,4 @@ class mrGetQuery(Enum):
 
 class mrPostQuery(Enum):
     addUser = "http://127.0.0.1:7979/add_user/"
-
+    addRecipes = "http://127.0.0.1:7979/add_recipes"
