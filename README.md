@@ -49,12 +49,19 @@ Project is: _in progress_
 
 
 ## screenshots
-Main site    
-![client1](https://user-images.githubusercontent.com/46598418/145726067-86dbac63-ba8e-4280-a537-12e53b7ce1f0.png)
+Main site (public recipes)    ![home](https://user-images.githubusercontent.com/46598418/146378182-246a8ca4-a464-45b8-bd28-96ca2cc95c72.png)
 
 
-Recipes   
-![client2](https://user-images.githubusercontent.com/46598418/145726080-d378c551-89b6-45c1-afac-5edd3a24ea84.png)
+SingUp       ![SingUp](https://user-images.githubusercontent.com/46598418/146378265-06f789d4-84a8-4325-8eb0-858441b6f347.png)
+
+LogIn        ![LogIn](https://user-images.githubusercontent.com/46598418/146378374-39f0987a-2f2a-4a7f-bab1-7c3dd793784d.png)
+
+User         ![user](https://user-images.githubusercontent.com/46598418/146378477-ca89e554-cc74-425d-9e8a-ed55ec057aea.png)
+
+User recipes (Private and Public)   ![userRecipes](https://user-images.githubusercontent.com/46598418/146378727-20db27e8-7b5b-4880-adf8-b4f8e8dc922e.png)
+
+add New Recpipes    ![addRecipes](https://user-images.githubusercontent.com/46598418/146378808-4b48e2ab-aed0-4dec-a367-eebf8d0b2ab4.png)
+
 
 
 ## To Do
