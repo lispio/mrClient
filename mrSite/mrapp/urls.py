@@ -10,4 +10,7 @@ urlpatterns = [
     path('userLogged', views.userLogged, name="userLogged"),
     path('addRecipes', views.addRecipes, name="addRecipes"),
     path('myRecipes', views.myRecipes, name="myRecipes"),
+    path('addIngredients', views.addIngredients, name="addIngredients"),
+    path('addSteps', views.addSteps, name="addSteps"),
+    path('recipesPreview', views.recipesPreview, name="recipesPreview"),
 ]

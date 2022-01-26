@@ -1,0 +1,23 @@
+{% extends 'baseLogged.html'%}
+{% block content%}
+
+    <form method="post" action="#">
+            {% csrf_token %}
+            <p>Steps</p>
+            {% for step in stepsList %}
+                <li>
+                    {{step}}
+                </li>
+            {% endfor %}
+
+            {{form}}
+
+        <p><input type="Submit" name="addStep" value="add Step"/>
+            <input type="Submit" name="save" value="save Steps"/></p>
+
+    </form>
+    <a href="/recipesPreview">
+        <button>Recipes Preview</button>
+    </a>
+
+{% endblock %}

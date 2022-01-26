@@ -16,18 +16,22 @@ class addRecipesForm(forms.Form):
 
 
 class addRecipesMing(forms.Form):
-    ingredients = forms.CharField(max_length=250)
+    ING_CHOICES = [
+        ('orange', 'Oranges'),
+        ('cantaloupe', 'Cantaloupes'),
+        ('mango', 'Mangoes'),
+        ('honeydew', 'Honeydews'),
+    ]
+    ingredients = forms.CharField(label='What is your favorite fruit?', widget=forms.Select(choices=ING_CHOICES))
     weight = forms.CharField(label="weight (g) ", max_length=5)
 
 
 class RecipesDesc(forms.Form):
+    REC_TYPE_CHOICES = [(1, 'chleb'), (2, 'ser'), (3, 'wino')]
+    IS_PUBLIC = [(1, True), (2, False), (3, 'Protected')]
     recipesName = forms.CharField(label="Recipes Name", max_length=50)
-    recipesType = forms.CharField(label="Recipes Type")
-    is_public = forms.BooleanField(required=False)
+    recipesType = forms.CharField(label="Recipes Type", widget=forms.Select(choices=REC_TYPE_CHOICES))
+    is_public = forms.BooleanField(required=False, widget=forms.Select(choices=IS_PUBLIC))
     recipesDesc = forms.CharField(label="Recipes Desc", max_length=200)
-    #"name": "Wheat Bread-Everyday",
-    #"user_id": 1,
-    #"recipes_type": 1,
-    #"is_public": true,
-    #"des": "simple bright bread on yeast",
+
 

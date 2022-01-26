@@ -1,0 +1,23 @@
+{% extends 'baseLogged.html'%}
+{% block content%}
+
+    <form method="post" action="#">
+        {% csrf_token %}
+
+        {% for ming in MingList %}
+            <li>
+                {{ming.0}}  {{ming.1}} gram {{ results}}
+            </li>
+        {% endfor %}
+
+        {{mingForm.as_p}}
+
+        <p><input type="Submit" name="addIng" value="add Ingredients"/>
+            <input type="Submit" name="saveIng" value="save Ingredients"/></p>
+
+    </form>
+    <a href="/addSteps">
+        <button>Steps</button>
+    </a>
+
+{% endblock %}

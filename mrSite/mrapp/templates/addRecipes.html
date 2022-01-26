@@ -2,13 +2,6 @@
 {% block content%}
 
     <form method="post" action="#">
-        currently available are those types of recipes:
-        <p>
-        <p>1 bread/chleb</p>
-        <p>2 cheese/ser</p>
-        <p>3 wine/wino</p>
-        <p>4 liquor/nalewka</p>
-        </p>
         {% csrf_token %}
         Recipes Description
 
@@ -18,37 +11,8 @@
 
     </form>
 
-
-    <form method="post" action="#">
-        {% csrf_token %}
-
-        {% for ming in MingList %}
-            <li>
-                {{ming.0}}  {{ming.1}} gram
-            </li>
-        {% endfor %}
-
-        {{mingForm.as_p}}
-
-        <p><input type="Submit" name="addIng" value="add Ingredients"/>
-            <input type="Submit" name="saveIng" value="save Ingredients"/></p>
-
-    </form>
-
-    <form method="post" action="#">
-            {% csrf_token %}
-            <p>Steps</p>
-            {% for step in stepsList %}
-                <li>
-                    {{step}}
-                </li>
-            {% endfor %}
-
-            {{form}}
-
-        <p><input type="Submit" name="addStep" value="add Step"/>
-            <input type="Submit" name="save" value="save Steps"/></p>
-
-    </form>
+    <a href="/addIngredients">
+        <button>Ingredients</button>
+    </a>
 
 {% endblock %}
