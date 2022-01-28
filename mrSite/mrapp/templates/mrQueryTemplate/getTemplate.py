@@ -6,6 +6,7 @@ class mrGetQuery(Enum):
     recipesMy = "http://127.0.0.1:7979/my_recipes?username=%s"
     recipesSteps = "http://127.0.0.1:7979/recipes_steps?recipesName=%s"
     recipesMing = "http://127.0.0.1:7979/recipes_ming?recipesName=%s"
+    ingredients = "http://127.0.0.1:7979/get_ingredients"
 
 
 class mrPostQuery(Enum):

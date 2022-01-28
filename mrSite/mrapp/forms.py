@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
+from .common import get_ingredients
+
 
 class UserForm(UserCreationForm):
     email = forms.EmailField()
@@ -16,13 +18,7 @@ class addRecipesForm(forms.Form):
 
 
 class addRecipesMing(forms.Form):
-    ING_CHOICES = [
-        ('orange', 'Oranges'),
-        ('cantaloupe', 'Cantaloupes'),
-        ('mango', 'Mangoes'),
-        ('honeydew', 'Honeydews'),
-    ]
-    ingredients = forms.CharField(label='What is your favorite fruit?', widget=forms.Select(choices=ING_CHOICES))
+    ingredients = forms.CharField(label='ingredients:', widget=forms.Select(choices=get_ingredients()))
     weight = forms.CharField(label="weight (g) ", max_length=5)
 
 
@@ -35,3 +31,5 @@ class RecipesDesc(forms.Form):
     recipesDesc = forms.CharField(label="Recipes Desc", max_length=200)
 
 
+class recipesPreviewForm(forms.Form):
+    pass

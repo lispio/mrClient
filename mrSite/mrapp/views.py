@@ -4,10 +4,10 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 import requests
-from .forms import UserForm, addRecipesForm, addRecipesMing, RecipesDesc
+from .forms import UserForm, addRecipesForm, addRecipesMing, RecipesDesc, recipesPreviewForm
 from .templates.mrQueryTemplate.getTemplate import mrGetQuery, mrPostQuery
 
-from .common import get_recipes, get_recipes_my, addUserToMr
+from .common import get_recipes, get_recipes_my, addUserToMr, get_ingredients
 
 
 stepsList = []
@@ -77,8 +77,8 @@ def signup(request):
 
 def newMing(MList):
     for mgs in MList:
-        tmpMing.append({"ming_id": mgs[0], "weight": mgs[1]})
-
+        tmpMing.append({"ming_id": mgs[0], "weight": mgs[1], "name": mgs[2]})
+    MList.clear()
     return tmpMing
 
 
@@ -138,7 +138,13 @@ def prepareAddRecipesJson(jI, jM, jS):
         recpiesJson = geI
         recpiesJson["steps"] = geS
         recpiesJson["ming"] = geM
+        geI = None
+        geS = None
+        geM = None
         return recpiesJson
+
+
+ing = dict(get_ingredients())
 
 
 def addIngredients(request):
@@ -147,12 +153,15 @@ def addIngredients(request):
         mingForm = addRecipesMing(request.POST)
         if mingForm.is_valid():
             if request.POST.get("addIng"):
-                mingList.append([mingForm.cleaned_data['ingredients'], mingForm.cleaned_data["weight"]])
+                mingList.append([mingForm.cleaned_data['ingredients'], mingForm.cleaned_data["weight"],
+                                 ing[int(mingForm.cleaned_data['ingredients'])]])
             if request.POST.get("saveIng"):
                 jsonMing = newMing(mingList)
+                mingList.clear()
     else:
+        if jsonMing:
+            jsonMing.clear()
         mingForm = addRecipesMing()
-
     return render(request, "addIngredients.html", {"mingForm": mingForm, "MingList": mingList})
 
 
@@ -166,20 +175,32 @@ def addSteps(request):
                 stepsList.append(form.cleaned_data["steps"])
             if request.POST.get("save"):
                 jsonSteps = prepareStepsJson(stepsList)
-                print(f"STEPS: {jsonSteps}")
-
+                stepsList.clear()
     else:
+        if jsonSteps:
+            jsonSteps.clear()
         form = addRecipesForm()
 
     return render(request, 'addSteps.html', {"form": form, "stepsList": stepsList})
 
 
 def recipesPreview(request):
-    rec = prepareAddRecipesJson(jsonInfo, jsonMing, jsonSteps)
-    if rec:
-        response = requests.post(mrPostQuery.addRecipes.value, data=json.dumps(rec))
-
-    return render(request, 'recipesPreview.html', {"jsonInfo": jsonInfo, "jsonMing": jsonMing, "jsonSteps": jsonSteps})
+    print("JI")
+    print(jsonInfo)
+    print("JM")
+    print(jsonMing)
+    print("JS")
+    print(jsonSteps)
+    if request.method == "POST":
+        form = recipesPreviewForm(request.POST)
+        if form.is_valid():
+            if request.POST.get('saveRecipes'):
+                rec = prepareAddRecipesJson(jsonInfo, jsonMing, jsonSteps)
+                response = requests.post(mrPostQuery.addRecipes.value, data=json.dumps(rec))
+                print(response)
+    else:
+        form = recipesPreviewForm()
+    return render(request, 'recipesPreview.html', {"form": form, "jsonInfo": jsonInfo, "jsonMing": jsonMing, "jsonSteps": jsonSteps})
 
 
 def addRecipes(request):
@@ -194,8 +215,10 @@ def addRecipes(request):
                                 request.POST.get('is_public')])
 
             jsonInfo = addDesc(recipesInfo, request.user.id)
-
+            recipesInfo.clear()
     else:
+        if jsonInfo:
+            jsonInfo.clear()
         recipesDesc = RecipesDesc()
 
     return render(request, 'addRecipes.html', {"recipesDesc": recipesDesc})

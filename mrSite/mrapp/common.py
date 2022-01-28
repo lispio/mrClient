@@ -26,6 +26,15 @@ def get_recipes_my(username):
         return {"myRecipes": ""}
 
 
+def get_ingredients():
+    ingredients = requests.get(mrGetQuery.ingredients.value).json()
+    tmpIng = []
+    for ing in ingredients:
+        tmpIng.append((ingredients[ing]['id'], ingredients[ing]['name']))
+
+    return tmpIng
+
+
 def addUserToMr(username):
     requests.post(mrPostQuery.addUser.value, data='{"name": "%s"}' % username)
     return {"message": "added"}
