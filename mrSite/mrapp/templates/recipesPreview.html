@@ -1,0 +1,25 @@
+{% extends 'baseLogged.html'%}
+{% block content%}
+
+    <form method="post" action="#">
+        {% csrf_token %}
+        <p><b>Name:</b> {{jsonInfo.name}}</p>
+        <p><b>description:</b> {{jsonInfo.des}}</p>
+        <b>Ingredients:</b>
+            {% for JM in jsonMing %}
+                <li>
+                   {{JM.name}}: {{JM.weight}}
+                </li>
+            {% endfor %}
+
+        <b>Steps:</b>
+            {% for JS in jsonSteps %}
+                <li>
+                {{JS.s_num}}: {{JS.s_desc}}
+                </li>
+            {% endfor %}
+    <p><input type="Submit" name="saveRecipes" value="save recipes"/></p>
+    </form>
+
+
+{% endblock %}

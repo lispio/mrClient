@@ -1,0 +1,17 @@
+{% extends 'baseLogged.html'%}
+{% block content%}
+    {% csrf_token %}
+
+   <p><h2> My Recipes </h2></p>
+    <ol>
+        {% for recipes in myRecipes%}
+        <li>
+            <a href="{% url 'recipes' recipes.0 %}">
+                {{recipes.0}}
+            </a>
+        </li>
+        {% endfor %}
+    </ol>
+
+
+{% endblock %}
