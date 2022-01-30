@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 import requests
 from .forms import UserForm, addRecipesForm, addRecipesMing, RecipesDesc, recipesPreviewForm
-from .templates.mrQueryTemplate.getTemplate import mrGetQuery, mrPostQuery
+from .templates.mrGetTemplate import mrGetQuery, mrPostQuery
 
 from .common import get_recipes, get_recipes_my, addUserToMr, get_ingredients
 

@@ -1,6 +1,6 @@
 import requests
 
-from .templates.mpQueryTemplate.getTemplate import mpGetQuery
+from .templates.mpGetTemplate import mpGetQuery
 
 
 def getMyPantryInfo():

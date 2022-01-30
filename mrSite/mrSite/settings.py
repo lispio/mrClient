@@ -56,7 +56,7 @@ ROOT_URLCONF = 'mrSite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/opt/lispio/mrClient/mrSite/mrapp/templates/html'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

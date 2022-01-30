@@ -1,6 +1,6 @@
 import requests
 
-from .templates.mrQueryTemplate.getTemplate import mrGetQuery, mrPostQuery
+from .templates.mrGetTemplate import mrGetQuery, mrPostQuery
 
 
 def get_recipes():
