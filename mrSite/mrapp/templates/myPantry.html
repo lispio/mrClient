@@ -1,0 +1,8 @@
+{% extends 'baseLogged.html'%}
+{% block content%}
+    {% csrf_token %}
+
+   <p><h2> My Pantry </h2></p>
+    {{message}}
+
+{% endblock %}

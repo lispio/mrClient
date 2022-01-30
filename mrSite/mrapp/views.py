@@ -9,6 +9,7 @@ from .templates.mrQueryTemplate.getTemplate import mrGetQuery, mrPostQuery
 
 from .common import get_recipes, get_recipes_my, addUserToMr, get_ingredients
 
+from .myPantry import getMyPantryInfo
 
 stepsList = []
 mingList = []
@@ -185,19 +186,12 @@ def addSteps(request):
 
 
 def recipesPreview(request):
-    print("JI")
-    print(jsonInfo)
-    print("JM")
-    print(jsonMing)
-    print("JS")
-    print(jsonSteps)
     if request.method == "POST":
         form = recipesPreviewForm(request.POST)
         if form.is_valid():
             if request.POST.get('saveRecipes'):
                 rec = prepareAddRecipesJson(jsonInfo, jsonMing, jsonSteps)
                 response = requests.post(mrPostQuery.addRecipes.value, data=json.dumps(rec))
-                print(response)
     else:
         form = recipesPreviewForm()
     return render(request, 'recipesPreview.html', {"form": form, "jsonInfo": jsonInfo, "jsonMing": jsonMing, "jsonSteps": jsonSteps})
@@ -222,3 +216,7 @@ def addRecipes(request):
         recipesDesc = RecipesDesc()
 
     return render(request, 'addRecipes.html', {"recipesDesc": recipesDesc})
+
+
+def myPantry(request):
+    return render(request, 'myPantry.html', getMyPantryInfo())
